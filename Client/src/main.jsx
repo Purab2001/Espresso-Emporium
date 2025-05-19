@@ -22,7 +22,7 @@ const router = createBrowserRouter([
     children: [
       {
         index: true,
-        loader: () => fetch('http://localhost:3000/coffees'),
+        loader: () => fetch('https://espressoemporium.vercel.app/coffees'),
         hydrateFallbackElement: <LoadingSpinner/>,
         Component: Home,
       },
@@ -32,14 +32,14 @@ const router = createBrowserRouter([
       },
       {
         path: "coffee/:id",
-        loader: ({ params }) => fetch(`http://localhost:3000/coffees/${params.id}`),
+        loader: ({ params }) => fetch(`https://espressoemporium.vercel.app/coffees/${params.id}`),
         hydrateFallbackElement: <LoadingSpinner/>,
         Component: CoffeeDetails,
       },
       {
         path: "update-coffee/:id",
         loader: ({ params }) =>
-          fetch(`http://localhost:3000/coffees/${params.id}`),
+          fetch(`https://espressoemporium.vercel.app/coffees/${params.id}`),
         hydrateFallbackElement: <LoadingSpinner />,
         Component: UpdateCoffee,
       },
@@ -54,7 +54,7 @@ const router = createBrowserRouter([
       {
         path: "users",
         loader: () =>
-          fetch('https://coffee-store-server-gtbz.onrender.com/users'),
+          fetch('https://espressoemporium.vercel.app/users'),
         hydrateFallbackElement: <LoadingSpinner />,
         Component: Users,
       },

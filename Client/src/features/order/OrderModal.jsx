@@ -110,7 +110,7 @@ export default function OrderModal({ open, handleClose, coffee }) {
   if (!open || !coffee) return null;
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-40">
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70">
       <div className="bg-white rounded-lg shadow-lg w-full max-w-md relative">
         {/* Header */}
         <div className="flex items-center justify-between px-6 py-4 bg-gradient-to-r from-[#F4F3F0] to-[#D2B48C] rounded-t-lg">
@@ -124,7 +124,7 @@ export default function OrderModal({ open, handleClose, coffee }) {
           </div>
           <button
             onClick={handleClose}
-            className="text-gray-600 hover:text-gray-900 p-1 rounded transition"
+            className="text-gray-600 hover:text-gray-900 p-1 rounded transition cursor-pointer"
             aria-label="Close"
             disabled={loading}
           >
@@ -141,11 +141,11 @@ export default function OrderModal({ open, handleClose, coffee }) {
             <img
               src={coffee.photo}
               alt={coffee.name}
-              className="h-40 w-2/3 object-cover rounded-lg shadow-md"
+              className="h-40 w-1/2 object-contain"
             />
-            <div className="flex flex-col justify-center w-1/3">
-              <span className="font-rancho text-xl text-[#331A15]">{coffee.name}</span>
-              <span className="text-gray-600 mb-2">Unit Price</span>
+            <div className="flex flex-col justify-center w-1/3 space-y-2">
+              <span className="rancho text-xl text-[#331A15]">{coffee.name}</span>
+              <span className="text-[#1B1A1A] text-sm">Unit Price</span>
               <span className="font-bold text-[#331A15]">${coffee.price}</span>
             </div>
           </div>
@@ -155,7 +155,7 @@ export default function OrderModal({ open, handleClose, coffee }) {
             <div className="flex items-center gap-3">
               <button
                 onClick={handleDecrement}
-                className="text-[#331A15] p-1 rounded-full border border-[#331A15] disabled:opacity-50"
+                className="text-[#331A15] p-1 cursor-pointer disabled:opacity-50"
                 disabled={quantity <= 1 || loading}
                 aria-label="Decrease quantity"
               >
@@ -174,7 +174,7 @@ export default function OrderModal({ open, handleClose, coffee }) {
               />
               <button
                 onClick={handleIncrement}
-                className="text-[#331A15] p-1 rounded-full border border-[#331A15]"
+                className="text-[#331A15] p-1 cursor-pointer"
                 disabled={loading}
                 aria-label="Increase quantity"
               >
@@ -197,14 +197,14 @@ export default function OrderModal({ open, handleClose, coffee }) {
         <div className="flex justify-end gap-2 px-6 pb-4">
           <button
             onClick={handleClose}
-            className="px-4 py-2 rounded text-gray-700 border border-gray-300 hover:bg-gray-100 transition"
+            className="px-4 py-2 rounded text-gray-700 border border-gray-300 hover:bg-gray-100 transition cursor-pointer"
             disabled={loading}
           >
             Cancel
           </button>
           <button
             onClick={handleSubmit}
-            className="px-4 py-2 rounded text-white bg-[#331A15] hover:bg-[#C19A6B] flex items-center gap-2 transition"
+            className="px-4 py-2 rounded text-white bg-[#331A15] hover:bg-[#C19A6B] flex items-center gap-2 transition cursor-pointer"
             disabled={loading}
           >
             <svg width="20" height="20" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
