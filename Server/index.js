@@ -19,9 +19,6 @@ const client = new MongoClient(uri, {
 });
 
 async function run() {
-    try {
-        await client.connect();
-
         const coffeeCollection = client.db("espressoDB").collection("coffee");
         const userCollection = client.db("espressoDB").collection("users");
 
@@ -71,7 +68,7 @@ async function run() {
             res.send(result);
         });
         app.post('/users', async (req, res) => {
-            const newUser = req.body;
+            const userProfile = req.body;
             const result = await userCollection.insertOne(userProfile);
             res.send(result);
         });
@@ -94,11 +91,7 @@ async function run() {
             res.send(result);
         });
 
-        await client.db("admin").command({ ping: 1 });
         console.log("Pinged your deployment. You successfully connected to MongoDB!");
-    } finally {
-        // await client.close();
-    }
 }
 run().catch(console.dir);
 
@@ -110,3 +103,5 @@ app.get('/', (req, res) => {
 app.listen(port, () => {
   console.log(`Server is running on http://localhost:${port}`);
 });
+
+module.exports = app;
