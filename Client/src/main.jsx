@@ -28,20 +28,32 @@ const router = createBrowserRouter([
       },
       {
         path: "addCoffee",
-        Component: AddCoffee,
+        element: (
+          <ProtectedRoutes>
+            <AddCoffee />
+          </ProtectedRoutes>
+        ),
       },
       {
         path: "coffee/:id",
         loader: ({ params }) => fetch(`https://espressoemporium.vercel.app/coffees/${params.id}`),
         hydrateFallbackElement: <LoadingSpinner/>,
-        Component: CoffeeDetails,
+        element: (
+          <ProtectedRoutes>
+            <CoffeeDetails />
+          </ProtectedRoutes>
+        ),
       },
       {
         path: "update-coffee/:id",
         loader: ({ params }) =>
           fetch(`https://espressoemporium.vercel.app/coffees/${params.id}`),
         hydrateFallbackElement: <LoadingSpinner />,
-        Component: UpdateCoffee,
+        element: (
+          <ProtectedRoutes>
+            <UpdateCoffee />
+          </ProtectedRoutes>
+        ),
       },
       {
         path: "sign-in",
@@ -68,6 +80,8 @@ const router = createBrowserRouter([
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
-    <RouterProvider router={router} />
+    <AuthProvider>
+      <RouterProvider router={router} />
+    </AuthProvider>
   </StrictMode>,
 )

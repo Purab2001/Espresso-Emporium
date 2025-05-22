@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { toast } from 'react-toastify';
+import { FaCoffee } from "react-icons/fa";
 
 export default function OrderModal({ open, handleClose, coffee }) {
   const [quantity, setQuantity] = useState(1);
@@ -116,9 +117,7 @@ export default function OrderModal({ open, handleClose, coffee }) {
         <div className="flex items-center justify-between px-6 py-4 bg-gradient-to-r from-[#F4F3F0] to-[#D2B48C] rounded-t-lg">
           <div className="flex items-center">
             <span className="mr-2 text-[#331A15]">
-              <svg width="24" height="24" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
-                <path d="M6 2h9a2 2 0 0 1 2 2v2a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2zm0 6h9a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2z" />
-              </svg>
+              <FaCoffee size={24} />
             </span>
             <span className="font-rancho text-2xl text-[#331A15]">Order {coffee.name}</span>
           </div>
@@ -207,10 +206,14 @@ export default function OrderModal({ open, handleClose, coffee }) {
             className="px-4 py-2 rounded text-white bg-[#331A15] hover:bg-[#C19A6B] flex items-center gap-2 transition cursor-pointer"
             disabled={loading}
           >
-            <svg width="20" height="20" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
-              <path d="M6 2h9a2 2 0 0 1 2 2v2a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2zm0 6h9a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2z" />
-            </svg>
-            {loading ? 'Placing Order...' : 'Place Order'}
+            <FaCoffee />
+            {loading ? (
+              <>
+                Placing Order <span className="loading loading-spinner loading-xs"></span>
+              </>
+            ) : (
+              'Place Order'
+            )}
           </button>
         </div>
       </div>
