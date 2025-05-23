@@ -89,7 +89,7 @@ const Users = () => {
                             </th>
                             <th>Name</th>
                             <th>Email</th>
-                            <th>Photo URL</th>
+                            <th>Last Signed In</th>
                             <th></th>
                         </tr>
                     </thead>
@@ -122,7 +122,7 @@ const Users = () => {
                                 <td>
                                     <div className="flex gap-2">
                                         <Link
-                                            to='/user-details'
+                                            to={`/user-details/email/${user?.email}`}
                                             className='p-2 bg-[#D2B48C] text-white rounded cursor-pointer hover:bg-[#C19A6B] transition-colors duration-300 transform hover:scale-105 inline-flex items-center justify-center'
                                         >
                                             <BsEye className='text-lg' />

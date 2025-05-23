@@ -4,6 +4,7 @@ import { FaArrowLeft, FaEdit, FaEnvelope, FaRegClock, FaIdCard, FaSignInAlt, FaS
 import Swal from 'sweetalert2';
 import { updateProfile } from 'firebase/auth';
 import { AuthContext } from '../../contexts/AuthContext';
+import Button from '../../ui/Button';
 
 const UserDetails = () => {
     const { user, auth } = useContext(AuthContext);
@@ -252,14 +253,15 @@ const UserDetails = () => {
 
                         {isEditing && (
                             <div className="mt-8">
-                                <button
+                                <Button
                                     onClick={handleSaveProfile}
-                                    disabled={isSubmitting}
-                                    className="w-full py-3 bg-[#D2B48C] text-[#331A15] rancho text-xl border-2 border-[#331A15] rounded-md hover:bg-[#C19A6B] cursor-pointer disabled:opacity-70 disabled:cursor-not-allowed"
-                                    style={{ textShadow: '2px 2px 4px rgba(0, 0, 0, 0.3)' }}
+                                    className={`w-full bg-[#D2B48C] text-[#331A15] ${isSubmitting ? 'opacity-70 cursor-not-allowed' : 'hover:bg-[#C19A6B]'}`}
+                                    variant="Square"
+                                    bgNone={false}
+                                    textColor="text-[#331A15]"
                                 >
                                     {isSubmitting ? 'Saving Changes...' : 'Save Changes'}
-                                </button>
+                                </Button>
                             </div>
                         )}
                     </div>
