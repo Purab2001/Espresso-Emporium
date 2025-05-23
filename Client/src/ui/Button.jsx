@@ -22,7 +22,7 @@ const Button = ({ text, onClick, className, icon, children, variant = "default",
                 <span>{text || children || 'Button Text'}</span>
                 {icon && <span className="inline-flex">{icon}</span>}
             </span>
-            <span className="absolute inset-0 bg-[#D2B48C] transition-transform duration-300 ease-in-out"></span>
+            <span className="absolute inset-0 bg-[#E3B577] transition-transform duration-300 ease-in-out"></span>
             <span className="absolute inset-0 bg-[#331A15] transform scale-x-0 group-hover:scale-x-100 transition-transform duration-400 origin-center"></span>
         </button>
     );

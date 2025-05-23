@@ -23,7 +23,7 @@ const router = createBrowserRouter([
       {
         index: true,
         loader: () => fetch('https://espressoemporium.vercel.app/coffees'),
-        hydrateFallbackElement: <LoadingSpinner/>,
+        hydrateFallbackElement: <LoadingSpinner />,
         Component: Home,
       },
       {
@@ -37,7 +37,7 @@ const router = createBrowserRouter([
       {
         path: "coffee/:id",
         loader: ({ params }) => fetch(`https://espressoemporium.vercel.app/coffees/${params.id}`),
-        hydrateFallbackElement: <LoadingSpinner/>,
+        hydrateFallbackElement: <LoadingSpinner />,
         element: (
           <ProtectedRoutes>
             <CoffeeDetails />
@@ -71,7 +71,17 @@ const router = createBrowserRouter([
         Component: Users,
       },
       {
-        path: "user-details",
+        path: "user-details/:id",
+        loader: ({ params }) =>
+          fetch(`https://espressoemporium.vercel.app/users/${params.id}`),
+        hydrateFallbackElement: <LoadingSpinner />,
+        Component: UserDetails,
+      },
+      {
+        path: "user-details/email/:email",
+        loader: ({ params }) =>
+          fetch(`https://espressoemporium.vercel.app/users/email/${params.email}`),
+        hydrateFallbackElement: <LoadingSpinner />,
         Component: UserDetails,
       }
     ]
