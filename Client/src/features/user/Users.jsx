@@ -3,6 +3,7 @@ import { BsEye, BsTrash } from 'react-icons/bs';
 import { Link, useLoaderData } from 'react-router';
 import Swal from 'sweetalert2';
 import { AuthContext } from '../../contexts/AuthContext';
+import axios from 'axios';
 
 const Users = () => {
     // Fetch users from the server and set up state
@@ -30,11 +31,9 @@ const Users = () => {
         }).then((result) => {
             if (result.isConfirmed) {
                 // First delete from database
-                fetch(`https://espressoemporium.vercel.app/users/${_id}`, {
-                    method: 'DELETE',
-                })
-                    .then(res => res.json())
-                    .then(data => {
+                axios.delete(`https://espressoemporium.vercel.app/users/${_id}`)
+                    .then(response => {
+                        const data = response.data;
                         if (data.deletedCount) {
                             // If user exists in Firebase, delete from Firebase too
                             const currentUser = auth.currentUser;
@@ -69,6 +68,21 @@ const Users = () => {
                                 }
                             });
                         }
+                    })
+                    .catch(error => {
+                        console.error("Error deleting user from database:", error);
+                        Swal.fire({
+                            title: "Error!",
+                            text: "Failed to delete user. Please try again.",
+                            icon: "error",
+                            background: '#F4F3F0',
+                            iconColor: '#EA4744',
+                            customClass: {
+                                title: 'text-[#331A15] font-rancho text-2xl',
+                                content: 'text-gray-700',
+                                confirmButton: 'font-rancho text-xl',
+                            }
+                        });
                     });
             }
         });

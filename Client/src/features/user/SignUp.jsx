@@ -3,6 +3,7 @@ import { Link, useNavigate } from 'react-router';
 import Swal from 'sweetalert2';
 import { AuthContext } from '../../contexts/AuthContext';
 import Button from '../../ui/Button';
+import axios from 'axios';
 
 const SignUp = () => {
     const { createUser } = useContext(AuthContext);
@@ -35,16 +36,13 @@ const SignUp = () => {
                 }
 
                 // Save user to the database
-                fetch('https://espressoemporium.vercel.app/users', {
-                    method: 'POST',
+                axios.post('https://espressoemporium.vercel.app/users', userProfile, {
                     headers: {
                         'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify(userProfile),
+                    }
                 })
-                    .then(res => res.json())
-                    .then(data => {
-                        console.log('User created:', data);
+                    .then(response => {
+                        console.log('User created:', response.data);
                         Swal.fire({
                             title: 'Sign Up Successful!',
                             text: 'Welcome to Espresso Emporium!',

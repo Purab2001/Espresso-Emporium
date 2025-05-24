@@ -3,6 +3,7 @@ import { Link, useLoaderData } from 'react-router';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Button from '../../ui/Button';
+import axios from 'axios';
 
 const UpdateCoffee = () => {
     const { _id, name, quantity, supplier, price, category, details, photo } = useLoaderData();
@@ -13,14 +14,13 @@ const UpdateCoffee = () => {
         const formData = new FormData(form);
         const updatedCoffee = Object.fromEntries(formData.entries());
 
-        fetch(`https://espressoemporium.vercel.app/coffees/${_id}`, {
-            method: 'PUT',
+        axios.put(`https://espressoemporium.vercel.app/coffees/${_id}`, updatedCoffee, {
             headers: {
                 'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(updatedCoffee),
-        }).then(res => res.json())
-            .then(data => {
+            }
+        })
+            .then(response => {
+                const data = response.data;
                 if (data.modifiedCount > 0) {
                     toast.success('Coffee updated successfully!', {
                         position: "top-right",
@@ -39,7 +39,8 @@ const UpdateCoffee = () => {
                         },
                     });
                 }
-            }).catch(error => {
+            })
+            .catch(error => {
                 console.error('Error updating coffee:', {
                     error,
                     coffeeId: _id,

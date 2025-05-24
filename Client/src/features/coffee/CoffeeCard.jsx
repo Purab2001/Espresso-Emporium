@@ -1,6 +1,7 @@
 import React, { useState, useContext } from 'react';
 import { Link } from 'react-router';
 import Swal from 'sweetalert2';
+import axios from 'axios';
 import { BsEye, BsPencilSquare, BsTrash } from 'react-icons/bs';
 import { FaShoppingCart } from 'react-icons/fa';
 import OrderModal from '../order/OrderModal';
@@ -30,11 +31,9 @@ const CoffeeCard = ({ coffee, setCoffees, coffees }) => {
             }
         }).then((result) => {
             if (result.isConfirmed) {
-                fetch(`https://espressoemporium.vercel.app/coffees/${_id}`, {
-                    method: 'DELETE',
-                })
-                    .then(res => res.json())
-                    .then(data => {
+                axios.delete(`https://espressoemporium.vercel.app/coffees/${_id}`)
+                    .then(response => {
+                        const data = response.data;
                         if (data.deletedCount) {
                             const remaining = coffees.filter(cof => cof._id !== _id);
                             setCoffees(remaining);
@@ -51,6 +50,16 @@ const CoffeeCard = ({ coffee, setCoffees, coffees }) => {
                                 }
                             });
                         }
+                    })
+                    .catch(error => {
+                        console.error('Error deleting coffee:', error);
+                        Swal.fire({
+                            title: "Error",
+                            text: "Failed to delete coffee",
+                            icon: "error",
+                            background: '#F4F3F0',
+                            iconColor: '#EA4744'
+                        });
                     });
             }
         });

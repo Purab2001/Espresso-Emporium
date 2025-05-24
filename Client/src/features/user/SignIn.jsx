@@ -5,6 +5,7 @@ import { BsEye, BsEyeSlash } from 'react-icons/bs';
 import { AuthContext } from '../../contexts/AuthContext';
 import { auth } from '../../firebase/firebase.init';
 import Button from '../../ui/Button';
+import axios from 'axios';
 
 const SignIn = () => {
     const [email, setEmail] = useState('');
@@ -26,16 +27,17 @@ const SignIn = () => {
                     email,
                     lastSignInTime: result.user?.metadata?.lastSignInTime,
                 }
-                fetch('https://espressoemporium.vercel.app/users', {
-                    method: 'PATCH',
+                axios.patch('https://espressoemporium.vercel.app/users', signInInfo, {
                     headers: {
                         'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify(signInInfo),
-                }).then(res => res.json())
-                    .then(data => {
-                        console.log('User sign-in time updated successfully', data);
+                    }
+                })
+                    .then(response => {
+                        console.log('User sign-in time updated successfully', response.data);
                     })
+                    .catch(err => {
+                        console.error('Error updating user sign-in time:', err);
+                    });
                 navigate('/');
             })
             .catch(error => {

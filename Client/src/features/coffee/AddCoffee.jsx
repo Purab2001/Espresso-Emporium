@@ -3,6 +3,7 @@ import { Link } from 'react-router';
 import { FaArrowLeft } from 'react-icons/fa';
 import Swal from 'sweetalert2';
 import Button from '../../ui/Button';
+import axios from "axios";
 
 const AddCoffee = () => {
     const handleAddCoffee = e => {
@@ -11,30 +12,34 @@ const AddCoffee = () => {
         const formData = new FormData(form);
         const newCoffee = Object.fromEntries(formData.entries());
 
-        fetch('https://espressoemporium.vercel.app/coffees', {
-            method: 'POST',
-            headers: {
-                'Content-Type':'application/json',
-            },
-            body: JSON.stringify(newCoffee),
-        })
-        .then(res => res.json())
-        .then(data => {
-            if(data.insertedId) {
+        axios.post('https://espressoemporium.vercel.app/coffees', newCoffee)
+            .then(response => {
+                if (response.data.insertedId) {
+                    Swal.fire({
+                        title: "Coffee Added Successfully",
+                        icon: "success",
+                        background: '#F4F3F0',
+                        iconColor: '#D2B48C',
+                        confirmButtonColor: "#D2B48C",
+                        customClass: {
+                            title: 'text-[#331A15] rancho text-2xl',
+                            confirmButton: 'rancho text-xl border-2 border-[#331A15]',
+                        }
+                    });
+                    form.reset();
+                }
+            })
+            .catch(error => {
+                console.error('Error adding coffee:', error);
                 Swal.fire({
-                    title: "Coffee Added Successfully",
-                    icon: "success",
+                    title: "Error",
+                    text: "Failed to add coffee",
+                    icon: "error",
                     background: '#F4F3F0',
-                    iconColor: '#D2B48C',
-                    confirmButtonColor: "#D2B48C",
-                    customClass: {
-                        title: 'text-[#331A15] rancho text-2xl',
-                        confirmButton: 'rancho text-xl border-2 border-[#331A15]',
-                    }
+                    iconColor: '#EA4744',
+                    confirmButtonColor: "#D2B48C"
                 });
-                form.reset();
-            }
-        })
+            });
     }
 
     return (

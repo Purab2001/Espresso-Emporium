@@ -5,6 +5,7 @@ import Swal from 'sweetalert2';
 import { updateProfile } from 'firebase/auth';
 import { AuthContext } from '../../contexts/AuthContext';
 import Button from '../../ui/Button';
+import axios from 'axios';
 
 const UserDetails = () => {
     const { user, auth } = useContext(AuthContext);
@@ -48,19 +49,17 @@ const UserDetails = () => {
             }
 
             // 2. Update MongoDB user profile
-            const response = await fetch('https://espressoemporium.vercel.app/users', {
-                method: 'PATCH',
+            const response = await axios.patch('https://espressoemporium.vercel.app/users', {
+                email: userData?.email || user?.email,
+                name: name,
+                photo: photoURL
+            }, {
                 headers: {
                     'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                    email: userData?.email || user?.email,
-                    name: name,
-                    photo: photoURL
-                }),
+                }
             });
 
-            const data = await response.json();
+            const data = response.data;
 
             if (data.modifiedCount > 0) {
                 Swal.fire({
